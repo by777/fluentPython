@@ -47,7 +47,11 @@ class DogCat(data.Dataset):
             # 测试集和验证集
             if self.test or not train:
                 self.transforms = T.Compose([
+<<<<<<< HEAD
                     T.Scale(224),
+=======
+                    T.Resize(224),
+>>>>>>> origin/main
                     T.CenterCrop(224),
                     T.ToTensor(),
                     normalize
@@ -55,14 +59,23 @@ class DogCat(data.Dataset):
             # 训练集
             else:
                 self.transforms = T.Compose([
+<<<<<<< HEAD
                     T.Scale(256),
                     T.RandomSizedCrop(224),
+=======
+                    T.Resize(256),
+                    T.RandomResizedCrop(224),
+>>>>>>> origin/main
                     T.RandomHorizontalFlip(),
                     T.ToTensor(),
                     normalize
                 ])
 
+<<<<<<< HEAD
     def __getitem__(self, indx):
+=======
+    def __getitem__(self, index):
+>>>>>>> origin/main
         """
         返回一张图片的数据，如果是测试集，没有图片id，如1000.jpg返回1000
         :param indx:
@@ -79,3 +92,10 @@ class DogCat(data.Dataset):
 
     def __len__(self):
         return len(self.imgs)
+<<<<<<< HEAD
+=======
+
+
+if __name__ == '__main__':
+    pass
+>>>>>>> origin/main
