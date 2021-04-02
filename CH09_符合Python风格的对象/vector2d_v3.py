@@ -1,0 +1,64 @@
+# -*- coding: utf-8 -*-
+# @TIME : 2021/3/26 19:58
+# @AUTHOR : Xu Bai
+# @FILE :
+# @DESCRIPTION :
+
+
+from array import array
+import math
+
+
+class Vector2d:
+    typecode = 'd'  # 类属性，在Vector2d实例和字节序列转换时使用
+
+    def __init__(self, x, y):
+        self.__x = float(x)
+        self.__y = float(y)
+
+    # 把读值方法标记为特性
+    @property
+    def x(self):
+        return self.__x
+
+    @property
+    def y(self):
+        return self.__y
+
+    # 添加hash方法后，向量变成可散列的了，才能放到set中
+    def __hash__(self):
+        # 位运算符
+        return hash(self.x) ^ hash(self.y)
+
+    def __iter__(self):
+        # 把vector2d变为可迭代的对象，这样才可以拆包
+        # 这个方法的实现方式很简单，直接调用生成器表达式一个接一个产出分量
+        # 读取的方法不加下划线
+        return (i for i in (self.x, self.y))
+
+    def __repr__(self):
+        class_name = type(self).__name__
+        return '{}({!r},{!r})'.format(class_name, *self)
+
+    def __str__(self):
+        return str(tuple(self))
+
+    def __bytes__(self):
+        return (bytes([ord(self.typecode)])
+                + bytes(array(self.typecode, self)))
+
+    def __eq__(self, other):
+        return tuple(self) == tuple(other)
+
+    def __abs__(self):
+        return math.hypot(self.x, self.y)
+
+    def __bool__(self):
+        return bool(abs(self))
+
+    # 类方法装饰器
+    @classmethod
+    def frombytes(cls, octets):  # 不用传入self参数，相反要通过cls传入类自身
+        typecode = chr(octets[0])
+        memv = memoryview(octets[1:]).cast(typecode)
+        return cls(*memv)
