@@ -11,7 +11,7 @@ from torchvision.models import squeezenet1_1
 
 class SqueezeNet(BasicModule):
     def __init__(self, num_classes=2):
-        super(SqueezeBet, self).__init__()
+        super(SqueezeNet, self).__init__()
         self.model_name = 'squeezenet'
         self.model = squeezenet1_1(pretrained=True)
         # 修改原始的num_class: 预训练模型是1000分类
