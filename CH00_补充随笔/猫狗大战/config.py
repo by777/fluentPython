@@ -18,7 +18,7 @@ class DefaultConfig(object):
     use_gpu = False
     num_workers = 0
     print_freq = 20  # print info every N batch
-    debug_file = './tmp/debug/'  # if os.path.exists(debug_file), enter ipdb
+    debug_file = './tmp/debug'  # if os.path.exists(debug_file), enter ipdb
     result_file = 'result.csv'
     max_epoch = 10
     lr = .1  # initial learning rate
