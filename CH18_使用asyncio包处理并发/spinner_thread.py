@@ -46,6 +46,10 @@ def supervisor():
     spinner.start()
     # 运行slowfunction会阻塞主线程，同时从属线程以动画形式显示旋转指针
     result = slow_function()
+    # Python 没有提供终止线程的 API，这是有意为之的。若想关闭线
+    # 程，必须给线程发送消息。这里，我使用的是 signal.go 属性：在主
+    # 线程中把它设为 False 后，spinner 线程最终会注意到，然后干净地
+    # 退出。
     signal.go = False
     spinner.join()  # 等待spinner线程结束
     return result
